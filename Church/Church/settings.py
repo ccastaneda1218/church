@@ -131,3 +131,5 @@ SESSION_COOKIE_AGE = 600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # If True, the session cookie will be set to expire when the user's Web browser is closed, and session will not persist.
+LOGIN_URL = '/login/'
+
