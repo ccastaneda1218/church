@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>List of Classes</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Classroom Name</th>
+                <th>Date Created</th>
+                <th>Created By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for classroom in classrooms %}
+            <tr>
+                <td>{{ classroom.name }}</td>
+                <td>{{ classroom.created_at }}</td>
+                <td>{{ classroom.created_by.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<h3>Totals by Class</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Classroom</th>
+            <th>Total Students</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for class_count in class_counts %}
+        <tr>
+            <td>{{ class_count.classroom__name }}</td>
+            <td>{{ class_count.total_students }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

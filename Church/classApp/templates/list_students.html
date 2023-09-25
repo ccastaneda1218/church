@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Totals by Class</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Classroom</th>
+            <th>Total Students</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for class_count in class_counts %}
+        <tr>
+            <td>{{ class_count.classroom__name }}</td>
+            <td>{{ class_count.total_students }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="container">
+    <h2>Students List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Parent Full Name</th>
+                <th>Classroom</th>
+                <th>Date Added</th>
+                <th>Added By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.first_name }} {{ student.last_name }}</td>
+                <td>{{ student.parent_full_name }}</td>
+                <td>{{ student.classroom.name }}</td>
+                <td>{{ student.added_on }}</td>
+                <td>{{ student.added_by.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

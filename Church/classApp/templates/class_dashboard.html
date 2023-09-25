@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Class Dashboard</h2>
+    <p>Welcome to the class dashboard!</p>
+</div>
+
+
+<!-- ... existing code ... -->
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Create Classroom</h5>
+        <a href="{% url 'create_classroom' %}" class="btn btn-primary">Create a Classroom</a>
+    </div>
+</div>
+
+<!-- ... existing code ... -->
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">List Classes</h5>
+        <a href="{% url 'list_classes' %}" class="btn btn-primary">View Classes</a>
+    </div>
+</div>
+<a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Return to Home</a>
+
+{% endblock %}
