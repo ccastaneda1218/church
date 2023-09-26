@@ -196,5 +196,10 @@ def todays_checkins(request):
 # def your_view_function(request):
 #     class_counts = Student.objects.values('classroom__name').annotate(total_students=Count('classroom')).order_by('classroom__name')
 
+# views.py
+from django.shortcuts import render
+
+def reports_dashboard(request):
+    return render(request, 'reports_dashboard.html')
 
 
