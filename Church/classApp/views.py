@@ -196,5 +196,40 @@ def todays_checkins(request):
 # def your_view_function(request):
 #     class_counts = Student.objects.values('classroom__name').annotate(total_students=Count('classroom')).order_by('classroom__name')
 
+# views.py
+from django.shortcuts import render
+
+def reports_dashboard(request):
+    return render(request, 'reports_dashboard.html')
+
+# views.py
+from django.shortcuts import render
+from .models import Student, CheckIn
+from django.db.models import Count
+
+def attendance_report(request):
+    student_attendance_counts = Student.objects.annotate(
+        total_checkins=Count('checkin')
+    ).order_by('classroom', '-total_checkins')
+
+    grouped_by_classroom = {}
+    for student in student_attendance_counts:
+        if student.classroom not in grouped_by_classroom:
+            grouped_by_classroom[student.classroom] = []
+        grouped_by_classroom[student.classroom].append(student)
+
+    return render(request, 'attendance_report.html', {'classrooms': grouped_by_classroom})
 
 
+from django.db.models import Count
+
+
+def classroom_reports(request):
+    # Annotate each classroom with the number of students
+    classrooms = Classroom.objects.annotate(total_students=Count('student'))
+
+    # Calculate total check-ins for each classroom
+    for classroom in classrooms:
+        classroom.total_checkins = CheckIn.objects.filter(student__classroom=classroom).count()
+
+    return render(request, 'classroom_reports.html', {'classrooms': classrooms})

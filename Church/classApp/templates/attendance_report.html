@@ -2,22 +2,25 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Today's Check-ins</h2>
+    <h2 class="mb-4">Attendance Report</h2>
     {% for classroom, students in classrooms.items %}
     <div class="card mb-4">
         <div class="card-header">
-            {{ classroom }}
+            {{ classroom.name }}
         </div>
         <ul class="list-group list-group-flush">
         {% for student in students %}
             <li class="list-group-item {% if forloop.counter|divisibleby:2 %}list-group-item-secondary{% endif %}">
-                {{ student.first_name }} {{ student.last_name }} - ID: {{ student.student_id }}
+                {{ student.first_name }} {{ student.last_name }}
+                <span class="float-right text-bold text-danger">
+                    Count: {{ student.total_checkins }}
+                </span>
             </li>
         {% endfor %}
         </ul>
     </div>
     {% endfor %}
 </div>
-<a href="{% url 'attendance_dashboard' %}" class="btn btn-secondary mt-3">Return To Dashboard</a>
+<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Return To Dashboard</a>
 
 {% endblock %}

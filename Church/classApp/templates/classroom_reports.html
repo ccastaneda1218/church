@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Classroom Reports</h2>
+    <div class="card">
+        <div class="card-header">
+            Classroom Statistics
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Classroom</th>
+                    <th>Total Students</th>
+                    <th>Total Check-ins</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for classroom in classrooms %}
+                <tr {% if forloop.counter|divisibleby:2 %}class="table-secondary"{% endif %}>
+                    <td>{{ classroom.name }}</td>
+                    <td>{{ classroom.total_students }}</td>
+                    <td>{{ classroom.total_checkins }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Return To Dashboard</a>
+
+{% endblock %}
