@@ -19,4 +19,6 @@ urlpatterns = [
     path('attendance-dashboard/todays-checkins/', views.todays_checkins, name='todays_checkins'),
     path('reports_dashboard/', views.reports_dashboard, name='reports_dashboard'),
 
+    path('attendance_report/', views.attendance_report, name='attendance_report'),
+
 ]

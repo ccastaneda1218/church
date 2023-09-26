@@ -3,4 +3,14 @@
 {% block content %}
     <!-- Your reports dashboard content here -->
     <h2>Reports Dashboard</h2>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Attendance Report</h5>
+    <p class="card-text">View attendance counts by student, grouped by class.</p>
+    <a href="{% url 'attendance_report' %}" class="btn btn-primary">View Report</a>
+  </div>
+</div>
+
+
 {% endblock %}
