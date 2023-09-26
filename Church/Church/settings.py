@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8aqe48fg^34n*5xs*pe5srvl8^zx7c616n5u@t8kb=k)qyps9!'
+SECRET_KEY = 'django-insecure-d7jpodx#+z**n=7%oz^^723v5klh$u%3=%w-vw6^qn9#u(g@lg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'classApp',
-
+    'classApp'
 ]
 
 MIDDLEWARE = [
@@ -107,7 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
+
 
 USE_I18N = True
 
@@ -124,12 +124,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Duration of a session in seconds. 600 seconds = 10 minutes.
-SESSION_COOKIE_AGE = 600
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
-# Expire the session when the user closes their browser.
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
-# If True, the session cookie will be set to expire when the user's Web browser is closed, and session will not persist.
 LOGIN_URL = '/login/'
 
+# Set session to expire after 10 minutes (10 minutes * 60 seconds/minute)
+SESSION_COOKIE_AGE = 10 * 60
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
