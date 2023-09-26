@@ -221,3 +221,15 @@ def attendance_report(request):
     return render(request, 'attendance_report.html', {'classrooms': grouped_by_classroom})
 
 
+from django.db.models import Count
+
+
+def classroom_reports(request):
+    # Annotate each classroom with the number of students
+    classrooms = Classroom.objects.annotate(total_students=Count('student'))
+
+    # Calculate total check-ins for each classroom
+    for classroom in classrooms:
+        classroom.total_checkins = CheckIn.objects.filter(student__classroom=classroom).count()
+
+    return render(request, 'classroom_reports.html', {'classrooms': classrooms})

@@ -12,5 +12,15 @@
   </div>
 </div>
 
+<!-- ... your other code ... -->
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Classroom Reports</h5>
+        <p class="card-text">View the number of students and check-ins for each classroom.</p>
+        <a href="{% url 'classroom_reports' %}" class="btn btn-primary">View Report</a>
+    </div>
+</div>
+<!-- ... your other code ... -->
 
+<a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Return to Home</a>
 {% endblock %}

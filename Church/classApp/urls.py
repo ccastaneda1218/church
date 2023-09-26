@@ -20,5 +20,6 @@ urlpatterns = [
     path('reports_dashboard/', views.reports_dashboard, name='reports_dashboard'),
 
     path('attendance_report/', views.attendance_report, name='attendance_report'),
+    path('reports_dashboard/classroom_reports/', views.classroom_reports, name='classroom_reports'),
 
 ]
