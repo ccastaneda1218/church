@@ -1,29 +1,30 @@
+
+
 {% extends 'base.html' %}
 
 {% block content %}
 <div class="container">
-    <h2>Class Dashboard</h2>
-    <p>Welcome to the class dashboard!</p>
+    <h2>Attendance Dashboard</h2>
+    <!-- Your attendance related content will go here -->
 </div>
 
-
-<!-- ... existing code ... -->
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">Create Classroom</h5>
+        <h5 class="card-title">Check-in</h5>
         <p class="card-text">View the students who have checked in today.</p>
-        <a href="{% url 'create_classroom' %}" class="btn btn-primary">Create a Classroom</a>
+        <a href="{% url 'check_in' %}" class="btn btn-primary">Check-in Students</a>
     </div>
 </div>
 
-<!-- ... existing code ... -->
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">List Classes</h5>
+        <h5 class="card-title">Today's Check-ins</h5>
         <p class="card-text">View the students who have checked in today.</p>
-        <a href="{% url 'list_classes' %}" class="btn btn-primary">View Classes</a>
+        <a href="{% url 'todays_checkins' %}" class="btn btn-primary">View</a>
     </div>
 </div>
+
 <a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Return to Home</a>
+
 
 {% endblock %}

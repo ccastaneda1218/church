@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" class="mt-4">
+    {% csrf_token %}
+
+    <div class="form-group">
+        {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}" value="{{ field.value }}" required="{% if field.field.required %}true{% else %}false{% endif %}">
+        {% if field.errors %}
+            <div class="invalid-feedback">
+                {{ field.errors.0 }}
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Proceed to Confirm</button>
+</form>
+{% endblock %}
