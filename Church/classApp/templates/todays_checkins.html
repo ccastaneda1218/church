@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Today's Check-ins</h2>
+    {% for classroom, students in classrooms.items %}
+    <div class="card mb-4">
+        <div class="card-header">
+            {{ classroom }}
+        </div>
+        <ul class="list-group list-group-flush">
+        {% for student in students %}
+            <li class="list-group-item {% if forloop.counter|divisibleby:2 %}list-group-item-secondary{% endif %}">
+                {{ student.first_name }} {{ student.last_name }} - ID: {{ student.student_id }}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

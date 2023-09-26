@@ -1,17 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-4">
     <h2>Create Classroom</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {% if form.name.errors %}
-            <div class="alert alert-danger">
-                {{ form.name.errors }}
-            </div>
-        {% endif %}
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form>
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% if field.field.widget.input_type == 'text' %}
+                    <input type="text" class="form-control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.name }}" value="{{ field.value|default:'' }}" placeholder="Enter {{ field.label }}">
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="invalid-feedback">
+                            {{ field.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
