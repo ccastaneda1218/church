@@ -1,26 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <!-- Your reports dashboard content here -->
-    <h2>Reports Dashboard</h2>
+<div class="container mt-4">
+    <h2></h2>
 
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Attendance Report</h5>
-    <p class="card-text">View attendance counts by student, grouped by class.</p>
-    <a href="{% url 'attendance_report' %}" class="btn btn-primary">View Report</a>
-  </div>
-</div>
+    <div class="row">
+        <!-- Attendance Report Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Attendance Report</h5>
+                    <p class="card-text">View attendance counts by student, grouped by class.</p>
+                    <a href="{% url 'attendance_report' %}" class="btn btn-primary">View Report</a>
+                </div>
+            </div>
+        </div>
 
-<!-- ... your other code ... -->
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Classroom Reports</h5>
-        <p class="card-text">View the number of students and check-ins for each classroom.</p>
-        <a href="{% url 'classroom_reports' %}" class="btn btn-primary">View Report</a>
+        <!-- Classroom Reports Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Classroom Reports</h5>
+                    <p class="card-text">View the number of students and check-ins for each classroom.</p>
+                    <a href="{% url 'classroom_reports' %}" class="btn btn-primary">View Report</a>
+                </div>
+            </div>
+        </div>
+<!-- ... existing cards ... -->
+        <!-- Classroom Reports Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Date Range Report</h5>
+                    <p class="card-text">View the number of students and check-ins for each classroom.</p>
+                    <a href="{% url 'date_range_report' %}" class="btn btn-primary">Generate Report</a>
+                </div>
+            </div>
+        </div>
+
+                </div>
+        <!-- Return to Home Button -->
+        <div class="col-12 mt-3">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Return to Home</a>
+        </div>
     </div>
 </div>
-<!-- ... your other code ... -->
 
-<a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Return to Home</a>
+
+
+
+<!-- ... rest of the content ... -->
+
+
 {% endblock %}

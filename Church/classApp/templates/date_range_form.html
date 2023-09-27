@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.start_date.id_for_label }}">Start Date</label>
+                <input type="date" class="form-control" id="{{ form.start_date.id_for_label }}" name="{{ form.start_date.name }}" value="{{ form.start_date.value|default:'' }}">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.end_date.id_for_label }}">End Date</label>
+                <input type="date" class="form-control" id="{{ form.end_date.id_for_label }}" name="{{ form.end_date.name }}" value="{{ form.end_date.value|default:'' }}">
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Generate Report</button>
+</form>
+
+{% endblock %}

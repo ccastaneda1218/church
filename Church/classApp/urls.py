@@ -2,6 +2,10 @@ from django.urls import path
 from . import views
 from django.urls import path, re_path
 from django.views.generic import RedirectView
+from django.urls import path
+
+from django.urls import path
+from . import views
 
 urlpatterns = [
     path('login/', views.login_view, name='login'),
@@ -22,4 +26,15 @@ urlpatterns = [
     path('attendance_report/', views.attendance_report, name='attendance_report'),
     path('reports_dashboard/classroom_reports/', views.classroom_reports, name='classroom_reports'),
 
+    path('search_student/', views.search_student, name='search_student'),
+    path('edit_student/<int:student_id>/', views.edit_student, name='edit_student'),
+    path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('add_administrator/', views.add_administrator, name='add_administrator'),
+    path('edit_admin/', views.edit_admin, name='edit_admin'),
+    path('update_admin/<int:admin_id>/', views.update_admin, name='update_admin'),
+    path('delete_admin/<int:admin_id>/', views.delete_admin, name='delete_admin'),
+    path('reports_dashboard/date_range_report/', views.date_range_report, name='date_range_report'),
+
 ]
+
+

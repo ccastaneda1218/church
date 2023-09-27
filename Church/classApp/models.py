@@ -25,8 +25,9 @@ class Student(models.Model):
     last_name = models.CharField(max_length=100)
     student_id = models.PositiveIntegerField(unique=True, validators=[MinValueValidator(1), MaxValueValidator(999)])
     classroom = models.ForeignKey('Classroom', on_delete=models.CASCADE)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="students_added")
     added_on = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.full_name

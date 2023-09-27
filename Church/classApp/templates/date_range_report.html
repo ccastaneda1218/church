@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert{% if message.tags %} alert-{{ message.tags }}{% else %} alert-info{% endif %}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- Display student's information using Bootstrap cards -->
+{% for student in students %}
+    <div class="card mb-3 {% if student.total_checkins < 2 %}border-danger{% endif %}">
+        <div class="card-body">
+            <h5 class="card-title {% if student.total_checkins < 2 %}text-danger{% endif %}">Student: {{ student.first_name }} {{ student.last_name }}</h5>
+            <p class="card-text">
+                Parent Full Name: {{ student.parent_full_name }}<br>
+                Student ID: {{ student.student_id }}<br>
+                <span {% if student.total_checkins < 2 %}class="text-danger font-weight-bold"{% endif %}>Total Checkins: {{ student.total_checkins }}</span>
+            </p>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

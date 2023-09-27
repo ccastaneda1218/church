@@ -1,4 +1,3 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
@@ -19,16 +18,13 @@ def login_view(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
-from django.shortcuts import render
 
-# ... other views
 
 @login_required
 def class_dashboard(request):
     return render(request, 'class_dashboard.html')
 
 
-from django.shortcuts import render, redirect
 from .forms import ClassroomForm
 
 
@@ -46,8 +42,7 @@ def create_classroom(request):
     return render(request, 'create_classroom.html', {'form': form})
 
 
-from .models import Classroom, Student
-from django.db.models import Count
+
 
 @login_required
 def list_classes(request):
@@ -64,9 +59,7 @@ def list_classes(request):
 
     return render(request, 'list_classes.html', context)
 
-from django.shortcuts import render
 
-# ... other views ...
 
 @login_required
 def student_dashboard(request):
@@ -76,7 +69,7 @@ def student_dashboard(request):
 
 from .forms import AddStudentForm
 
-# ... other views ...
+
 
 @login_required
 def add_student(request):
@@ -92,11 +85,7 @@ def add_student(request):
     return render(request, 'add_student.html', {'form': form})
 
 
-from .models import Student
 
-# ... other views ...
-
-from django.db.models import Count
 
 @login_required
 def list_students(request):
@@ -105,7 +94,6 @@ def list_students(request):
 
     return render(request, 'list_students.html', {'students': students, 'class_counts': class_counts})
 
-# ... other imports ...
 
 @login_required
 def attendance_dashboard(request):
@@ -147,7 +135,6 @@ def check_in(request):
     classrooms = Classroom.objects.all()
     return render(request, 'list_classrooms.html', {'classrooms': classrooms})
 
-from django.contrib import messages
 
 
 @login_required
@@ -164,14 +151,7 @@ def confirm_check_in(request):
     return render(request, 'confirm_check_in.html', {'students': selected_students})
 
 
-from django.db.models import Count
-from django.utils import timezone
 
-from django.shortcuts import render
-from django.utils import timezone
-from .models import CheckIn
-
-from django.shortcuts import render
 from django.utils import timezone
 
 @login_required
@@ -191,22 +171,15 @@ def todays_checkins(request):
     return render(request, 'todays_checkins.html', {'classrooms': classrooms})
 
 
-# from django.db.models import Count
-# @login_required
-# def your_view_function(request):
-#     class_counts = Student.objects.values('classroom__name').annotate(total_students=Count('classroom')).order_by('classroom__name')
 
-# views.py
-from django.shortcuts import render
-
+@login_required
 def reports_dashboard(request):
     return render(request, 'reports_dashboard.html')
 
-# views.py
-from django.shortcuts import render
-from .models import Student, CheckIn
-from django.db.models import Count
 
+from .models import Student, CheckIn
+
+@login_required
 def attendance_report(request):
     student_attendance_counts = Student.objects.annotate(
         total_checkins=Count('checkin')
@@ -223,7 +196,7 @@ def attendance_report(request):
 
 from django.db.models import Count
 
-
+@login_required
 def classroom_reports(request):
     # Annotate each classroom with the number of students
     classrooms = Classroom.objects.annotate(total_students=Count('student'))
@@ -233,3 +206,123 @@ def classroom_reports(request):
         classroom.total_checkins = CheckIn.objects.filter(student__classroom=classroom).count()
 
     return render(request, 'classroom_reports.html', {'classrooms': classrooms})
+
+
+from .forms import StudentForm
+from .models import Student
+@login_required
+def search_student(request):
+    if 'query' in request.GET:
+        query = request.GET['query']
+        students = Student.objects.filter(first_name__icontains=query) | Student.objects.filter(last_name__icontains=query)
+    else:
+        students = Student.objects.all()
+
+    return render(request, 'search_student.html', {'students': students})
+@login_required
+def edit_student(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    if request.method == "POST":
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Student updated successfully!')
+            return redirect('search_student')
+    else:
+        form = StudentForm(instance=student)
+    return render(request, 'edit_student.html', {'form': form})
+@login_required
+def admin_dashboard(request):
+    return render(request, 'admin_dashboard.html')
+
+
+from .forms import AdminCreationForm
+
+@login_required
+def add_administrator(request):
+    if request.method == 'POST':
+        form = AdminCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password1'])  # hashing password with the correct field name
+            user.is_staff = True
+            user.is_active = True
+            user.save()
+            return redirect('dashboard')
+    else:
+        form = AdminCreationForm()
+    return render(request, 'add_administrator.html', {'form': form})
+
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .forms import AdminUpdateForm  # Assuming you've created a form for updating admin details
+
+@login_required
+def edit_admin(request):
+    admins = User.objects.filter(is_staff=True)  # Adjust the filter as per your need
+    return render(request, 'edit_admin.html', {'admins': admins})
+
+@login_required
+def update_admin(request, admin_id):
+    admin_instance = get_object_or_404(User, id=admin_id)
+
+    if request.method == 'POST':
+        form = AdminUpdateForm(request.POST, instance=admin_instance)
+
+        if form.is_valid():
+            # This sets the password properly using the set_password method
+            user = form.save()
+            messages.success(request, 'Admin details updated successfully.')
+            return redirect('edit_admin')
+        else:
+            # Form is not valid, display error messages
+            for field in form:
+                for error in field.errors:
+                    messages.error(request, error)
+    else:
+        form = AdminUpdateForm(instance=admin_instance)
+
+    return render(request, 'update_admin.html', {'form': form})
+
+
+@login_required
+def delete_admin(request, admin_id):
+    admin_instance = get_object_or_404(User, id=admin_id)
+
+    if request.method == 'POST':
+        admin_instance.delete()
+        messages.success(request, 'Admin deleted successfully.')
+        return redirect('edit_admin')
+
+    return render(request, 'confirm_delete.html', {'admin_instance': admin_instance})
+
+
+from .forms import DateRangeForm
+from django.db.models import Count
+
+from .models import Student, CheckIn, Classroom
+from django.db.models import Count, Q, F  # or any other imports from the same module
+from django.contrib import messages
+
+@login_required
+def date_range_report(request):
+    if request.method == 'POST':
+        form = DateRangeForm(request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+
+            student_attendance_counts = Student.objects.annotate(
+                total_checkins=Count('checkin', filter=Q(checkin__checked_on__range=[start_date, end_date]))
+            ).filter(total_checkins__gt=0)
+
+            if not student_attendance_counts.exists():
+                messages.warning(request, 'No records found within the provided date range.')
+
+            return render(request, 'date_range_report.html', {'students': student_attendance_counts})
+    else:
+        form = DateRangeForm()
+    return render(request, 'date_range_form.html', {'form': form})

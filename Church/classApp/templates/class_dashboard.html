@@ -1,29 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-4">
     <h2>Class Dashboard</h2>
     <p>Welcome to the class dashboard!</p>
-</div>
+    <div class="row">
 
+        <!-- Create Classroom Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create Classroom</h5>
+                    <p class="card-text">Click below to create a new classroom.</p>
+                    <a href="{% url 'create_classroom' %}" class="btn btn-primary">Create a Classroom</a>
+                </div>
+            </div>
+        </div>
 
-<!-- ... existing code ... -->
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Create Classroom</h5>
-        <p class="card-text">View the students who have checked in today.</p>
-        <a href="{% url 'create_classroom' %}" class="btn btn-primary">Create a Classroom</a>
+        <!-- List Classes Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">List Classes</h5>
+                    <p class="card-text">View all available classes.</p>
+                    <a href="{% url 'list_classes' %}" class="btn btn-primary">View Classes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ... You can add more cards if needed ... -->
+
+        <!-- Return to Home Button -->
+        <div class="col-12 mt-3">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Return to Home</a>
+        </div>
     </div>
 </div>
-
-<!-- ... existing code ... -->
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">List Classes</h5>
-        <p class="card-text">View the students who have checked in today.</p>
-        <a href="{% url 'list_classes' %}" class="btn btn-primary">View Classes</a>
-    </div>
-</div>
-<a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Return to Home</a>
-
 {% endblock %}

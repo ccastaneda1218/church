@@ -1,30 +1,38 @@
-
-
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-4">
     <h2>Attendance Dashboard</h2>
-    <!-- Your attendance related content will go here -->
-</div>
 
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Check-in</h5>
-        <p class="card-text">View the students who have checked in today.</p>
-        <a href="{% url 'check_in' %}" class="btn btn-primary">Check-in Students</a>
+    <div class="row">
+        <!-- Check-in Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Check-in</h5>
+                    <p class="card-text">Check-in students for today's classes or sessions.</p>
+                    <a href="{% url 'check_in' %}" class="btn btn-primary">Check-in Students</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Check-ins Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Check-ins</h5>
+                    <p class="card-text">View the list of students who have checked in today.</p>
+                    <a href="{% url 'todays_checkins' %}" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ... You can add more cards if needed ... -->
+
+        <!-- Return to Home Button -->
+        <div class="col-12 mt-3">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Return to Home</a>
+        </div>
     </div>
 </div>
-
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Today's Check-ins</h5>
-        <p class="card-text">View the students who have checked in today.</p>
-        <a href="{% url 'todays_checkins' %}" class="btn btn-primary">View</a>
-    </div>
-</div>
-
-<a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Return to Home</a>
-
-
 {% endblock %}
