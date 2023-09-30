@@ -2,17 +2,17 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Student Dashboard</h2>
-    <p>Welcome to the student dashboard!</p>
+    <h2>Panel de estudiantes</h2>
+    <p></p>
     <div class="row">
 
         <!-- Add Student Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Add Student</h5>
+                    <h5 class="card-title">Agregar estudiante</h5>
                     <p class="card-text">Click below to add a new student to the database.</p>
-                    <a href="{% url 'add_student' %}" class="btn btn-primary">Add a Student</a>
+                    <a href="{% url 'add_student' %}" class="btn btn-primary">Agregar</a>
                 </div>
             </div>
         </div>
@@ -21,9 +21,9 @@
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">List Students</h5>
-                    <p class="card-text">View all registered students.</p>
-                    <a href="{% url 'list_students' %}" class="btn btn-primary">View All Students</a>
+                    <h5 class="card-title">Lista de estudiantes</h5>
+                    <p class="card-text">Ver todos los estudiantes registrados y totales por clase.</p>
+                    <a href="{% url 'list_students' %}" class="btn btn-primary">Ver lista</a>
                 </div>
             </div>
         </div>
@@ -32,9 +32,9 @@
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Edit Student</h5>
-                    <p class="card-text">Search and edit student information.</p>
-                    <a href="{% url 'search_student' %}" class="btn btn-primary">Go to Edit</a>
+                    <h5 class="card-title">Editar estudiante</h5>
+                    <p class="card-text">Buscar y editar información de los estudiantes.</p>
+                    <a href="{% url 'search_student' %}" class="btn btn-primary">Editar</a>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
 
         <!-- Return to Home Button -->
         <div class="col-12 mt-3">
-            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Return to Home</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Devolver</a>
         </div>
     </div>
 </div>

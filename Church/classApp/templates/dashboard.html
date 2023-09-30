@@ -3,46 +3,49 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row">
+                <!-- Attendance Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Asistencia</h5>
+                    <p class="card-text">Registre a los estudiantes para las clases o sesiones de hoy.</p>
+                    <a href="{% url 'attendance_dashboard' %}" class="btn btn-primary">Asistencia</a>
+                </div>
+            </div>
+        </div>
+                <!-- Students Card -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Estudiantes</h5>
+                    <p class="card-text">Agregar estudiantes, editar estudiantes y ver lista de estudiantes</p>
+                    <a href="{% url 'student_dashboard' %}" class="btn btn-primary">Administrar Estudiantes</a>
+                </div>
+            </div>
+        </div>
+
         <!-- Class Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Class</h5>
-                    <p class="card-text">View the students who have checked in today.</p>
-                    <a href="{% url 'class_dashboard' %}" class="btn btn-primary">Go to Class Dashboard</a>
+                    <h5 class="card-title">Clases</h5>
+                    <p class="card-text">Crear clases, Lista de Clases, y Totales por clase.</p>
+                    <a href="{% url 'class_dashboard' %}" class="btn btn-primary">Administrar Clases</a>
                 </div>
             </div>
         </div>
 
-        <!-- Students Card -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Students</h5>
-                    <p class="card-text">View the students who have checked in today.</p>
-                    <a href="{% url 'student_dashboard' %}" class="btn btn-primary">Go to Student Dashboard</a>
-                </div>
-            </div>
-        </div>
 
-        <!-- Attendance Card -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Attendance</h5>
-                    <p class="card-text">View the students who have checked in today.</p>
-                    <a href="{% url 'attendance_dashboard' %}" class="btn btn-primary">Go to Attendance Dashboard</a>
-                </div>
-            </div>
-        </div>
+
+
 
         <!-- Reports Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Reports</h5>
-                    <p class="card-text">View and generate reports.</p>
-                    <a href="{% url 'reports_dashboard' %}" class="btn btn-primary">Go to Reports Dashboard</a>
+                    <h5 class="card-title">Reportes</h5>
+                    <p class="card-text">Ver y generar reportes.</p>
+                    <a href="{% url 'reports_dashboard' %}" class="btn btn-primary">Reportes</a>
                 </div>
             </div>
         </div>
@@ -53,7 +56,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Administradores</h5>
                     <p class="card-text">Administrar usuarios</p>
-                    <a href="{% url 'edit_admin' %}" class="btn btn-primary">Go to Edit Admin</a>
+                    <a href="{% url 'edit_admin' %}" class="btn btn-primary">Editar Admin</a>
                 </div>
             </div>
         </div>

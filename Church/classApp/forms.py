@@ -18,13 +18,19 @@ class AddStudentForm(forms.ModelForm):
 from django import forms
 from .models import Classroom, Student
 
+class CustomModelMultipleChoiceField(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, obj):
+        return f"{obj.student_id} - {obj.first_name} {obj.last_name} (Parent: {obj.parent_full_name})"
+
 class CheckInForm(forms.Form):
     def __init__(self, classroom_id, *args, **kwargs):
         super(CheckInForm, self).__init__(*args, **kwargs)
-        self.fields['students'] = forms.ModelMultipleChoiceField(
-            queryset=Student.objects.filter(classroom=classroom_id),
+        students = Student.objects.filter(classroom=classroom_id)
+        self.fields['students'] = CustomModelMultipleChoiceField(
+            queryset=students,
             widget=forms.CheckboxSelectMultiple
         )
+
 
 from django import forms
 from .models import Student
@@ -52,8 +58,8 @@ class AdminUpdateForm(forms.ModelForm):
     first_name = forms.CharField(required=True, error_messages={'required': 'First name is required.'})
     last_name = forms.CharField(required=True, error_messages={'required': 'Last name is required.'})
     username = forms.CharField(required=True, error_messages={'required': 'Username is required.'})
-    password1 = forms.CharField(widget=forms.PasswordInput(), required=True, label='New Password', error_messages={'required': 'Password is required.'})
-    password2 = forms.CharField(widget=forms.PasswordInput(), required=True, label='Confirm New Password')
+    password1 = forms.CharField(widget=forms.PasswordInput(), required=False, label='New Password')
+    password2 = forms.CharField(widget=forms.PasswordInput(), required=False, label='Confirm New Password')
 
     class Meta:
         model = User
@@ -64,17 +70,20 @@ class AdminUpdateForm(forms.ModelForm):
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
 
-        if password1 and password2 and password1 != password2:
-            self.add_error('password2', 'Passwords do not match.')
+        if password1 or password2:
+            if password1 != password2:
+                self.add_error('password2', 'Passwords do not match.')
 
         return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
+        if self.cleaned_data['password1']:
+            user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
         return user
+
 
 
 from django import forms

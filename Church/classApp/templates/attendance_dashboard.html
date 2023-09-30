@@ -2,16 +2,16 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Attendance Dashboard</h2>
+    <h2>Panel de asistencia</h2>
 
     <div class="row">
         <!-- Check-in Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Check-in</h5>
-                    <p class="card-text">Check-in students for today's classes or sessions.</p>
-                    <a href="{% url 'check_in' %}" class="btn btn-primary">Check-in Students</a>
+                    <h5 class="card-title">Registrarse</h5>
+                    <p class="card-text">Registre a los estudiantes para las clases o sesiones de hoy.</p>
+                    <a href="{% url 'check_in' %}" class="btn btn-primary">Registro de estudiantes</a>
                 </div>
             </div>
         </div>
@@ -20,9 +20,9 @@
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Today's Check-ins</h5>
-                    <p class="card-text">View the list of students who have checked in today.</p>
-                    <a href="{% url 'todays_checkins' %}" class="btn btn-primary">View</a>
+                    <h5 class="card-title">Registros de hoy</h5>
+                    <p class="card-text">Vea la lista de estudiantes que se registraron hoy.</p>
+                    <a href="{% url 'todays_checkins' %}" class="btn btn-primary">Ver</a>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
 
         <!-- Return to Home Button -->
         <div class="col-12 mt-3">
-            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Return to Home</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Devolver</a>
         </div>
     </div>
 </div>

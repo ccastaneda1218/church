@@ -2,17 +2,17 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Class Dashboard</h2>
-    <p>Welcome to the class dashboard!</p>
+    <h2>Panel de clase</h2>
+    <p></p>
     <div class="row">
 
         <!-- Create Classroom Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Create Classroom</h5>
-                    <p class="card-text">Click below to create a new classroom.</p>
-                    <a href="{% url 'create_classroom' %}" class="btn btn-primary">Create a Classroom</a>
+                    <h5 class="card-title">Crear Clase</h5>
+                    <p class="card-text">Haga clic a continuación para crear una nueva clase.</p>
+                    <a href="{% url 'create_classroom' %}" class="btn btn-primary">Crear un Clase</a>
                 </div>
             </div>
         </div>
@@ -21,9 +21,9 @@
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">List Classes</h5>
-                    <p class="card-text">View all available classes.</p>
-                    <a href="{% url 'list_classes' %}" class="btn btn-primary">View Classes</a>
+                    <h5 class="card-title">Listar clases</h5>
+                    <p class="card-text">Ver todas las clases disponibles y Estudiantes  por clases</p>
+                    <a href="{% url 'list_classes' %}" class="btn btn-primary">Ver Clases</a>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
 
         <!-- Return to Home Button -->
         <div class="col-12 mt-3">
-            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Return to Home</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Devolver</a>
         </div>
     </div>
 </div>

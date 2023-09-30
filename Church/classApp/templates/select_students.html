@@ -11,13 +11,13 @@
                         <li class="list-group-item {% if forloop.counter|divisibleby:2 %}list-group-item-secondary{% endif %}">
                             {% if student.pk in recently_checked_in_students %}
                                 <div class="text-danger">
-                                    {{ student.full_name }} - This student has already been checked-in within the last 4 hours.
+                                    {{ student.full_name }} (ID: {{ student.student_id }}) - Parent: {{ student.parent_full_name }} - This student has already been checked-in within the last 4 hours.
                                 </div>
                             {% else %}
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="{{ form.students.name }}" value="{{ student.pk }}" id="student-{{ student.pk }}" {% if student in form.students.value %}checked{% endif %}>
                                     <label class="form-check-label" for="student-{{ student.pk }}">
-                                        {{ student.full_name }}
+                                        {{ student.full_name }} (ID: {{ student.student_id }}) - Parent: {{ student.parent_full_name }}
                                     </label>
                                 </div>
                             {% endif %}
