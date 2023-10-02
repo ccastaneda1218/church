@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Attendance Report</h2>
+    <h2 class="mb-4">Reporte de asistencia</h2>
     {% for classroom, students in classrooms.items %}
     <div class="card mb-4">
         <div class="card-header">
@@ -21,6 +21,6 @@
     </div>
     {% endfor %}
 </div>
-<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Return To Dashboard</a>
+<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Devolver</a>
 
 {% endblock %}

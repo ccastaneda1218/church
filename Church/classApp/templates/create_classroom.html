@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Create Classroom</h2>
+    <h2>Crear Clase</h2>
     <div class="card">
         <div class="card-body">
             <form method="post">
@@ -20,11 +20,11 @@
                     {% endif %}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Crear</button>
             </form>
         </div>
     </div>
 </div>
-<a href="{% url 'class_dashboard' %}" class="btn btn-secondary mt-3">Go to Class Dashboard</a>
+<a href="{% url 'class_dashboard' %}" class="btn btn-secondary mt-3">Devolver</a>
 
 {% endblock %}

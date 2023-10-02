@@ -3,11 +3,11 @@
 {% block content %}
 <div class="container">
     <h2>Confirm Deletion</h2>
-    <p>Are you sure you want to delete the admin: {{ user.username }}?</p>
+    <p>¿Estás seguro de que quieres eliminar el administrador?: {{ user.username }}?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Confirm Delete</button>
-        <a href="{% url 'edit_admin' %}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+        <a href="{% url 'edit_admin' %}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 {% endblock %}

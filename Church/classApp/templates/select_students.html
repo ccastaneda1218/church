@@ -11,7 +11,7 @@
                         <li class="list-group-item {% if forloop.counter|divisibleby:2 %}list-group-item-secondary{% endif %}">
                             {% if student.pk in recently_checked_in_students %}
                                 <div class="text-danger">
-                                    {{ student.full_name }} (ID: {{ student.student_id }}) - Parent: {{ student.parent_full_name }} - This student has already been checked-in within the last 4 hours.
+                                    {{ student.full_name }} (ID: {{ student.student_id }}) - Parent: {{ student.parent_full_name }} - Este estudiante ya ha sido registrado.
                                 </div>
                             {% else %}
                                 <div class="form-check">

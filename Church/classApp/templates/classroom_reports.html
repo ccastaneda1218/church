@@ -2,17 +2,17 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Classroom Reports</h2>
+    <h2 class="mb-4">Reportes De Clases</h2>
     <div class="card">
         <div class="card-header">
-            Classroom Statistics
+            Estadísticas de Clases
         </div>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Classroom</th>
-                    <th>Total Students</th>
-                    <th>Total Check-ins</th>
+                    <th>Clases</th>
+                    <th>Total de estudiantes</th>
+                    <th>Registros totales</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +27,6 @@
         </table>
     </div>
 </div>
-<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Return To Dashboard</a>
+<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Devolver</a>
 
 {% endblock %}
