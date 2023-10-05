@@ -1,11 +1,10 @@
-from django.urls import path
 from . import views
-from django.urls import path, re_path
 from django.views.generic import RedirectView
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from django.urls import path
-from . import views
+
 
 urlpatterns = [
     path('login/', views.login_view, name='login'),
@@ -34,6 +33,7 @@ urlpatterns = [
     path('update_admin/<int:admin_id>/', views.update_admin, name='update_admin'),
     path('delete_admin/<int:admin_id>/', views.delete_admin, name='delete_admin'),
     path('reports_dashboard/date_range_report/', views.date_range_report, name='date_range_report'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
 ]
 

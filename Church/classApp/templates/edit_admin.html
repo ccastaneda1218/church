@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Edit Administrators</h2>
+    <h2>Add & Edit Administrators</h2>
         <a href="{% url 'add_administrator' %}" class="btn btn-primary mb-3">Add Admin</a>
 
     <table class="table">
@@ -10,7 +10,10 @@
             <tr>
                 <th>Full Name</th>
                 <th>Username</th>
+                <th>Admin Level</th>
                 <th>Action</th>
+
+
             </tr>
         </thead>
         <tbody>
@@ -18,6 +21,8 @@
             <tr>
                 <td>{{ admin.first_name }} {{ admin.last_name }}</td>
                 <td>{{ admin.username }}</td>
+                <td>{{ admin.get_admin_level_display }}</td>
+
                 <td>
                     <a href="{% url 'update_admin' admin.id %}" class="btn btn-secondary">Edit</a>
                     <a href="{% url 'delete_admin' admin.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this admin?');">Delete</a>

@@ -1,3 +1,4 @@
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
@@ -256,18 +257,20 @@ def add_administrator(request):
 
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
+from .models import CustomUser
+
 from django.contrib import messages
 from .forms import AdminUpdateForm  # Assuming you've created a form for updating admin details
 
 @login_required
 def edit_admin(request):
-    admins = User.objects.filter(is_staff=True)  # Adjust the filter as per your need
+    admins = CustomUser.objects.filter(is_staff=True) # Adjust the filter as per your need
     return render(request, 'edit_admin.html', {'admins': admins})
 
 @login_required
 def update_admin(request, admin_id):
-    admin_instance = get_object_or_404(User, id=admin_id)
+    admin_instance = get_object_or_404(CustomUser, id=admin_id)
+
 
     if request.method == 'POST':
         form = AdminUpdateForm(request.POST, instance=admin_instance)
@@ -290,7 +293,7 @@ def update_admin(request, admin_id):
 
 @login_required
 def delete_admin(request, admin_id):
-    admin_instance = get_object_or_404(User, id=admin_id)
+    admin_instance = get_object_or_404(CustomUser, id=admin_id)
 
     if request.method == 'POST':
         admin_instance.delete()

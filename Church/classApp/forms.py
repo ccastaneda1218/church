@@ -1,6 +1,6 @@
 from django import forms
 from .models import Classroom
-from django.contrib.auth.models import User
+from classApp.models import CustomUser
 
 class ClassroomForm(forms.ModelForm):
     class Meta:
@@ -43,16 +43,17 @@ class StudentForm(forms.ModelForm):
 
 
 from django import forms
-from django.contrib.auth.models import User
+from classApp.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
 
 class AdminCreationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, error_messages={'required': 'First name is required.'})
     last_name = forms.CharField(max_length=30, required=True, error_messages={'required': 'Last name is required.'})
+    admin_level = forms.ChoiceField(choices=CustomUser.ADMIN_LEVELS, required=True)
 
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'username', 'password1', 'password2']
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'username', 'password1', 'password2', 'admin_level']
 
 class AdminUpdateForm(forms.ModelForm):
     first_name = forms.CharField(required=True, error_messages={'required': 'First name is required.'})
@@ -60,10 +61,11 @@ class AdminUpdateForm(forms.ModelForm):
     username = forms.CharField(required=True, error_messages={'required': 'Username is required.'})
     password1 = forms.CharField(widget=forms.PasswordInput(), required=False, label='New Password')
     password2 = forms.CharField(widget=forms.PasswordInput(), required=False, label='Confirm New Password')
+    admin_level = forms.ChoiceField(choices=CustomUser.ADMIN_LEVELS, required=True)
 
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'username']
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'username', 'admin_level']
 
     def clean(self):
         cleaned_data = super().clean()

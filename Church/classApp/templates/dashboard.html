@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <div class="container mt-4">
     <div class="row">
                 <!-- Attendance Card -->
+        {% if request.user.admin_level >= 1 %}
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -13,6 +15,9 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+
+        {% if request.user.admin_level >= 1 %}
                 <!-- Students Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
@@ -23,7 +28,9 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 
+        {% if request.user.admin_level >= 2 %}
         <!-- Class Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
@@ -34,10 +41,12 @@
                 </div>
             </div>
         </div>
+    {% endif %}
 
 
 
 
+        {% if request.user.admin_level >= 3 %}
 
         <!-- Reports Card -->
         <div class="col-md-4 col-sm-6 mb-4">
@@ -49,7 +58,9 @@
                 </div>
             </div>
         </div>
+    {% endif %}
 
+          {% if request.user.admin_level >= 3 %}
         <!-- Admin Card -->
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card">
@@ -60,7 +71,7 @@
                 </div>
             </div>
         </div>
-
+    {% endif %}
         <!-- ... Add more cards as needed ... -->
     </div>
 </div>
