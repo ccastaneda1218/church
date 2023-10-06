@@ -4,6 +4,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from django.urls import path
+from .views import custom_report
 
 
 urlpatterns = [
@@ -32,8 +33,9 @@ urlpatterns = [
     path('edit_admin/', views.edit_admin, name='edit_admin'),
     path('update_admin/<int:admin_id>/', views.update_admin, name='update_admin'),
     path('delete_admin/<int:admin_id>/', views.delete_admin, name='delete_admin'),
-    path('reports_dashboard/date_range_report/', views.date_range_report, name='date_range_report'),
+    # path('reports_dashboard/date_range_report/', views.date_range_report, name='date_range_report'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('custom_report/', custom_report, name='custom_report'),
 
 ]
 

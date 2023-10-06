@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <form method="post">
     {% csrf_token %}
@@ -17,11 +18,30 @@
                 <input type="date" class="form-control" id="{{ form.end_date.id_for_label }}" name="{{ form.end_date.name }}" value="{{ form.end_date.value|default:'' }}">
             </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.classroom.id_for_label }}">Classroom</label>
+                <select class="form-control" id="{{ form.classroom.id_for_label }}" name="{{ form.classroom.name }}">
+                    <option value="">ALL</option>
+                    {% for classroom in form.classroom.field.queryset %}
+                        <option value="{{ classroom.pk }}" {% if classroom.pk == form.classroom.value %}selected{% endif %}>{{ classroom.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.threshold.id_for_label }}">Threshold</label>
+                <input type="number" class="form-control" id="{{ form.threshold.id_for_label }}" name="{{ form.threshold.name }}" value="{{ form.threshold.value|default:'' }}">
+            </div>
+        </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Generar Reporte</button>
-
 </form>
-    <a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Devolver</a>
+
+<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Devolver</a>
 
 {% endblock %}

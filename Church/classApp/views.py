@@ -302,30 +302,95 @@ def delete_admin(request, admin_id):
 
     return render(request, 'confirm_delete.html', {'admin_instance': admin_instance})
 
+#
+# from .forms import DateRangeForm
+# from django.db.models import Count
 
-from .forms import DateRangeForm
-from django.db.models import Count
+# from .models import Student, CheckIn, Classroom
+# from django.db.models import Count, Q, F  # or any other imports from the same module
+# from django.contrib import messages
+#
+# from django.contrib import messages
+# from django.shortcuts import render
+# from django.db.models import Count, Q
+# from django.contrib.auth.decorators import login_required
+# from .forms import DateRangeForm
+# from classApp.models import Student
+# from django.contrib import messages
+# from django.shortcuts import render
+# from django.utils import timezone
+#
+# @login_required
+# def date_range_report(request):
+#     if request.method == 'POST':
+#         form = DateRangeForm(request.POST)
+#
+#         if form.is_valid():
+#             start_date = form.cleaned_data['start_date']
+#             end_date = form.cleaned_data['end_date']
+#             classroom_selected = form.cleaned_data.get('classroom', None)
+#             threshold = form.cleaned_data['threshold']
+#
+#             # Start with all students
+#             students_query = Student.objects.all()
+#
+#             # If a specific classroom is selected, then filter by that classroom
+#             if classroom_selected:
+#                 students_query = students_query.filter(classroom=classroom_selected)
+#
+#             student_attendance_counts = students_query.annotate(
+#                 total_checkins=Count('checkin', filter=Q(checkin__checked_on__range=[start_date, end_date]))
+#             ).filter(total_checkins__lt=threshold)
+#             print(student_attendance_counts.query)
+#
+#             if not student_attendance_counts.exists():
+#                 messages.warning(request,
+#                                  'No records found within the provided date range or below the specified threshold.')
+#
+#             return render(request, 'date_range_report.html', {'students': student_attendance_counts})
+#
+#     else:
+#         form = DateRangeForm()
+#
+#     return render(request, 'date_range_form.html', {'form': form})
 
-from .models import Student, CheckIn, Classroom
-from django.db.models import Count, Q, F  # or any other imports from the same module
-from django.contrib import messages
+from django.shortcuts import render
+from .models import CheckIn, Classroom
+from .forms import CustomReportForm
 
-@login_required
-def date_range_report(request):
+def custom_report(request):
+    context = {}
     if request.method == 'POST':
-        form = DateRangeForm(request.POST)
+        form = CustomReportForm(request.POST)
         if form.is_valid():
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
+            classroom = form.cleaned_data['classroom']
+            threshold = form.cleaned_data['threshold']
 
-            student_attendance_counts = Student.objects.annotate(
-                total_checkins=Count('checkin', filter=Q(checkin__checked_on__range=[start_date, end_date]))
-            ).filter(total_checkins__gt=0)
+            # Filter students based on classroom
+            if classroom:
+                students = classroom.student_set.all()
+            else:
+                students = Student.objects.all()
 
-            if not student_attendance_counts.exists():
-                messages.warning(request, 'No records found within the provided date range.')
+            # Gather report data
+            report_data = []
+            for student in students:
+                checkin_count = CheckIn.objects.filter(student=student, checked_on__range=[start_date, end_date]).count()
+                data = {
+                    'full_name': student.full_name,
+                    'student_id': student.student_id,
+                    'parent_full_name': student.parent_full_name,
+                    'classroom': student.classroom.name,
+                    'checkin_count': checkin_count,
+                    'highlight': checkin_count < threshold
+                }
+                report_data.append(data)
 
-            return render(request, 'date_range_report.html', {'students': student_attendance_counts})
+            context['report_data'] = report_data
     else:
-        form = DateRangeForm()
-    return render(request, 'date_range_form.html', {'form': form})
+        form = CustomReportForm()
+
+    context['form'] = form
+    return render(request, 'report.html', context)

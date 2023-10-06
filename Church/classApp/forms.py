@@ -88,12 +88,29 @@ class AdminUpdateForm(forms.ModelForm):
 
 
 
+# from django import forms
+# from .models import Classroom
+#
+# class DateInput(forms.DateInput):
+#     input_type = 'date'
+#
+# class DateRangeForm(forms.Form):
+#     start_date = forms.DateField(label='Start Date', widget=DateInput())
+#     end_date = forms.DateField(label='End Date', widget=DateInput())
+#     classroom = forms.ModelChoiceField(queryset=Classroom.objects.all(), label='Classroom', required=False)
+#     threshold = forms.IntegerField(min_value=1, label='Threshold')
+#
+#     def __init__(self, *args, **kwargs):
+#         super(DateRangeForm, self).__init__(*args, **kwargs)
+#         self.fields['classroom'].choices = [('', 'ALL')] + [(classroom.pk, classroom.name) for classroom in Classroom.objects.all()]
+
+
 from django import forms
+from .models import Classroom
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
-class DateRangeForm(forms.Form):
-    start_date = forms.DateField(label='Start Date', widget=DateInput())
-    end_date = forms.DateField(label='End Date', widget=DateInput())
+class CustomReportForm(forms.Form):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    classroom = forms.ModelChoiceField(queryset=Classroom.objects.all(), required=False)
+    threshold = forms.IntegerField(min_value=1)
 
