@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Editar Clase</h2>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <!-- Loop through form fields and add Bootstrap classes and structure -->
+        {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+
+                <!-- Check if field is a checkbox or not -->
+                {% if field.field.widget.input_type == "checkbox" %}
+                    <div class="form-check">
+                        <input class="form-check-input {{ field.field.widget.attrs.class|default:'' }}"
+                               type="{{ field.field.widget.input_type }}"
+                               name="{{ field.name }}"
+                               id="{{ field.auto_id }}"
+                               {% if field.value %}checked{% endif %}>
+                        <label class="form-check-label" for="{{ field.auto_id }}">
+                            {{ field.label }}
+                        </label>
+                    </div>
+                {% else %}
+                    <input type="{{ field.field.widget.input_type }}"
+                           class="form-control {{ field.field.widget.attrs.class|default:'' }}"
+                           id="{{ field.id_for_label }}"
+                           name="{{ field.name }}"
+                           value="{{ field.value|default:'' }}"
+                           {% if field.field.required %}required{% endif %}>
+                {% endif %}
+
+                <!-- Error handling for each field -->
+                {% if field.errors %}
+                    <div class="invalid-feedback">
+                        {{ field.errors.0 }}
+                    </div>
+                {% else %}
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}

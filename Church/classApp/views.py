@@ -1,17 +1,21 @@
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from .forms import UserProfileForm
+
 
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+
+        # Check if the user exists and if they are active
+        if user is not None and user.is_active:
             login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
+            return render(request, 'login.html', {'error': 'Invalid credentials or inactive account'})
     return render(request, 'login.html')
 
 
@@ -264,7 +268,8 @@ from .forms import AdminUpdateForm  # Assuming you've created a form for updatin
 
 @login_required
 def edit_admin(request):
-    admins = CustomUser.objects.filter(is_staff=True) # Adjust the filter as per your need
+    # Filter by active admins
+    admins = CustomUser.objects.filter(is_staff=True, is_active=True)
     return render(request, 'edit_admin.html', {'admins': admins})
 
 @login_required
@@ -296,8 +301,9 @@ def delete_admin(request, admin_id):
     admin_instance = get_object_or_404(CustomUser, id=admin_id)
 
     if request.method == 'POST':
-        admin_instance.delete()
-        messages.success(request, 'Admin deleted successfully.')
+        admin_instance.is_active = False  # Set the admin to inactive
+        admin_instance.save()
+        messages.success(request, 'Admin deactivated successfully.')
         return redirect('edit_admin')
 
     return render(request, 'confirm_delete.html', {'admin_instance': admin_instance})
@@ -394,3 +400,39 @@ def custom_report(request):
 
     context['form'] = form
     return render(request, 'report.html', context)
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('dashboard')
+    else:
+        form = UserProfileForm(instance=request.user)
+    return render(request, 'update_profile.html', {'form': form})
+
+@login_required
+def update_classroom(request):
+    classrooms = Classroom.objects.all()
+    return render(request, 'update_classroom_list.html', {'classrooms': classrooms})
+
+
+from django.db import IntegrityError
+
+@login_required
+def edit_classroom(request, classroom_id):
+    classroom = get_object_or_404(Classroom, id=classroom_id)
+    if request.method == "POST":
+        form = ClassroomForm(request.POST, instance=classroom)
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, 'Classroom updated successfully!')
+                return redirect('update_classroom')
+            except IntegrityError:
+                messages.error(request, 'A classroom with this name already exists.')
+    else:
+        form = ClassroomForm(instance=classroom)
+    return render(request, 'edit_classroom_form.html', {'form': form})

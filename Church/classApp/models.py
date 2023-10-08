@@ -10,6 +10,8 @@ class CustomUser(AbstractUser):
         (3, 'Administradores'),
     )
     admin_level = models.IntegerField(choices=ADMIN_LEVELS, default=1)
+    is_active = models.BooleanField(default=True)
+
 
 class Classroom(models.Model):
     name = models.CharField(max_length=255, unique=True)

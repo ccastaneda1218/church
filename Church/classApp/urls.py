@@ -36,6 +36,11 @@ urlpatterns = [
     # path('reports_dashboard/date_range_report/', views.date_range_report, name='date_range_report'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('custom_report/', custom_report, name='custom_report'),
+    path('update_profile/', views.update_profile, name='update_profile'),
+
+    path('update_classroom/', views.update_classroom, name='update_classroom'),
+    path('edit_classroom/<int:classroom_id>/', views.edit_classroom, name='edit_classroom'),
+
 
 ]
 

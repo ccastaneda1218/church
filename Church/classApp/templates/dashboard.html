@@ -72,7 +72,20 @@
             </div>
         </div>
     {% endif %}
-        <!-- ... Add more cards as needed ... -->
+
+        {% if request.user.admin_level >= 1 %}
+        <!-- My Profile Card -->
+<div class="col-md-4 col-sm-6 mb-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Mi perfil</h5>
+            <p class="card-text">Actualiza tus datos personales y contraseña.</p>
+            <a href="{% url 'update_profile' %}" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
     </div>
 </div>
 {% endblock %}

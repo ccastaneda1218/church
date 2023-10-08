@@ -114,3 +114,29 @@ class CustomReportForm(forms.Form):
     classroom = forms.ModelChoiceField(queryset=Classroom.objects.all(), required=False)
     threshold = forms.IntegerField(min_value=1)
 
+class UserProfileForm(forms.ModelForm):
+    new_password = forms.CharField(widget=forms.PasswordInput(), required=False, label='New Password')
+    confirm_password = forms.CharField(widget=forms.PasswordInput(), required=False, label='Confirm New Password')
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if new_password or confirm_password:
+            if new_password != confirm_password:
+                self.add_error('confirm_password', 'Passwords do not match.')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if self.cleaned_data['new_password']:
+            user.set_password(self.cleaned_data['new_password'])
+        if commit:
+            user.save()
+        return user

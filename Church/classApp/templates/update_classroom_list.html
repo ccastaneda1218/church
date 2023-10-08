@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Actualizar Clase</h2>
+    <div class="row">
+        {% for classroom in classrooms %}
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ classroom.name }}</h5>
+                    <a href="{% url 'edit_classroom' classroom.id %}" class="btn btn-primary">Editar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
