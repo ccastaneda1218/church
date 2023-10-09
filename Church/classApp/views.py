@@ -2,6 +2,8 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
+# from .forms import DateRangeForm
+# from django.db.models import Count
 
 
 def login_view(request):
@@ -308,57 +310,6 @@ def delete_admin(request, admin_id):
 
     return render(request, 'confirm_delete.html', {'admin_instance': admin_instance})
 
-#
-# from .forms import DateRangeForm
-# from django.db.models import Count
-
-# from .models import Student, CheckIn, Classroom
-# from django.db.models import Count, Q, F  # or any other imports from the same module
-# from django.contrib import messages
-#
-# from django.contrib import messages
-# from django.shortcuts import render
-# from django.db.models import Count, Q
-# from django.contrib.auth.decorators import login_required
-# from .forms import DateRangeForm
-# from classApp.models import Student
-# from django.contrib import messages
-# from django.shortcuts import render
-# from django.utils import timezone
-#
-# @login_required
-# def date_range_report(request):
-#     if request.method == 'POST':
-#         form = DateRangeForm(request.POST)
-#
-#         if form.is_valid():
-#             start_date = form.cleaned_data['start_date']
-#             end_date = form.cleaned_data['end_date']
-#             classroom_selected = form.cleaned_data.get('classroom', None)
-#             threshold = form.cleaned_data['threshold']
-#
-#             # Start with all students
-#             students_query = Student.objects.all()
-#
-#             # If a specific classroom is selected, then filter by that classroom
-#             if classroom_selected:
-#                 students_query = students_query.filter(classroom=classroom_selected)
-#
-#             student_attendance_counts = students_query.annotate(
-#                 total_checkins=Count('checkin', filter=Q(checkin__checked_on__range=[start_date, end_date]))
-#             ).filter(total_checkins__lt=threshold)
-#             print(student_attendance_counts.query)
-#
-#             if not student_attendance_counts.exists():
-#                 messages.warning(request,
-#                                  'No records found within the provided date range or below the specified threshold.')
-#
-#             return render(request, 'date_range_report.html', {'students': student_attendance_counts})
-#
-#     else:
-#         form = DateRangeForm()
-#
-#     return render(request, 'date_range_form.html', {'form': form})
 
 from django.shortcuts import render
 from .models import CheckIn, Classroom
@@ -436,3 +387,62 @@ def edit_classroom(request, classroom_id):
     else:
         form = ClassroomForm(instance=classroom)
     return render(request, 'edit_classroom_form.html', {'form': form})
+
+
+from django.shortcuts import render
+from .models import Student, CheckIn
+
+def individual_student_report(request):
+    students = Student.objects.all()
+    # You can use annotate to count related objects per student
+    from django.db.models import Count
+    students = students.annotate(checkin_count=Count('checkin'))
+
+    context = {
+        'students': students
+    }
+    return render(request, 'individual_student_report.html', context)
+
+def student_details(request, pk):
+    student = Student.objects.get(pk=pk)
+    check_ins = CheckIn.objects.filter(student=student).order_by('-checked_on')
+    context = {
+        'student': student,
+        'check_ins': check_ins
+    }
+    return render(request, 'student_details.html', context)
+
+
+from django.shortcuts import render
+from django.db.models import Count
+from .models import CheckIn, Classroom
+from .forms import DateRangeReportForm
+
+
+def date_range_report(request):
+    form = DateRangeReportForm(request.GET or None)
+    students_data = []
+    if form.is_valid():
+        start_date = form.cleaned_data['start_date']
+        end_date = form.cleaned_data['end_date']
+        classroom = form.cleaned_data['classroom']
+        threshold = form.cleaned_data['threshold']
+
+        queryset = CheckIn.objects.filter(checked_on__range=[start_date, end_date])
+
+        if classroom:
+            queryset = queryset.filter(student__classroom=classroom)
+
+        # Aggregate checkins by students
+        students_data = queryset.values('student__first_name', 'student__last_name', 'student__student_id',
+                                        'student__parent_full_name').annotate(total_count=Count('student')).order_by(
+            'student')
+
+    context = {
+        'form': form,
+        'students_data': students_data,
+        'threshold': threshold if form.is_valid() else None,
+    }
+    return render(request, 'date_range_report.html', context)
+
+

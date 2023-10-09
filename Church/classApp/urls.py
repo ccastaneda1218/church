@@ -33,13 +33,17 @@ urlpatterns = [
     path('edit_admin/', views.edit_admin, name='edit_admin'),
     path('update_admin/<int:admin_id>/', views.update_admin, name='update_admin'),
     path('delete_admin/<int:admin_id>/', views.delete_admin, name='delete_admin'),
-    # path('reports_dashboard/date_range_report/', views.date_range_report, name='date_range_report'),
+
+    path('reports_dashboard/date_range_report/', views.date_range_report, name='date_range_report'),
+
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('custom_report/', custom_report, name='custom_report'),
     path('update_profile/', views.update_profile, name='update_profile'),
 
     path('update_classroom/', views.update_classroom, name='update_classroom'),
     path('edit_classroom/<int:classroom_id>/', views.edit_classroom, name='edit_classroom'),
+    path('individual_student_report/', views.individual_student_report, name='individual_student_report'),
+    path('student_details/<int:pk>/', views.student_details, name='student_details'),
 
 
 ]

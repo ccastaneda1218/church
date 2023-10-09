@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Details for {{ student.full_name }}</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Checked By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for check_in in check_ins %}
+            <tr>
+                <td>{{ check_in.checked_on|date:"l, F d, Y" }}</td>
+                <td>{{ check_in.checked_by.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'individual_student_report' %}" class="btn btn-secondary mt-3">Back to Student Report</a>
+
+</div>
+
+{% endblock %}

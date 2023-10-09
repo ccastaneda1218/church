@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Individual Student Report</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Student ID</th>
+                <th>Class Name</th>
+                <th>Check-In Count</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.full_name }}</td>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.classroom.name }}</td>
+                <td>{{ student.checkin_count }}</td>
+                <td>
+                    <a href="{% url 'student_details' student.pk %}" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+<a href="{% url 'reports_dashboard' %}" class="btn btn-secondary mt-3">Devolver</a>
+
+{% endblock %}

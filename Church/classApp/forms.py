@@ -35,11 +35,16 @@ class CheckInForm(forms.Form):
 from django import forms
 from .models import Student
 
+from django import forms
+from .models import Student, Classroom
+
+
 class StudentForm(forms.ModelForm):
+    classroom = forms.ModelChoiceField(queryset=Classroom.objects.all())
+
     class Meta:
         model = Student
         fields = ['parent_full_name', 'first_name', 'last_name', 'student_id', 'classroom']
-
 
 
 from django import forms
@@ -88,22 +93,24 @@ class AdminUpdateForm(forms.ModelForm):
 
 
 
-# from django import forms
-# from .models import Classroom
-#
-# class DateInput(forms.DateInput):
-#     input_type = 'date'
-#
-# class DateRangeForm(forms.Form):
-#     start_date = forms.DateField(label='Start Date', widget=DateInput())
-#     end_date = forms.DateField(label='End Date', widget=DateInput())
-#     classroom = forms.ModelChoiceField(queryset=Classroom.objects.all(), label='Classroom', required=False)
-#     threshold = forms.IntegerField(min_value=1, label='Threshold')
-#
-#     def __init__(self, *args, **kwargs):
-#         super(DateRangeForm, self).__init__(*args, **kwargs)
-#         self.fields['classroom'].choices = [('', 'ALL')] + [(classroom.pk, classroom.name) for classroom in Classroom.objects.all()]
+from django import forms
+from .models import Classroom
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+from django import forms
+from .models import Classroom
+
+class DateRangeReportForm(forms.Form):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    classroom = forms.ModelChoiceField(
+        queryset=Classroom.objects.all(),
+        required=False,
+        empty_label="ALL"
+    )
+    threshold = forms.IntegerField(help_text="Highlight records below this threshold.")
 
 from django import forms
 from .models import Classroom
